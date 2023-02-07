@@ -5,13 +5,14 @@ const decimalButton = document.querySelector('#decimal');
 const equalsButton = document.querySelector('#equals');
 const numberButtons = document.querySelectorAll('.number');
 const operatorButtons = document.querySelectorAll('.operator');
-
+const calculationDisplay = document.querySelector('#calculation-display');
 
 let firstNumber = '';
 let operator = '';
 let secondNumber = '';
 let result = '';
 let decimalAdded = false;
+let calculationString = '';
 
 const add = (num1, num2) => {
     return num1 + num2;
@@ -45,17 +46,24 @@ const operate = (operator, num1, num2) => {
         default:
             return 'Invalid operator';
     }
-
 };
 
 const handleNumberClick = (event) => {
     const value = event.target.textContent;
+
     if (!operator) {
+        if (result) {
+            firstNumber = '';
+            result = '';
+        }
         firstNumber += value;
         display.value = firstNumber;
     } else {
         secondNumber += value;
         display.value = firstNumber + operator + secondNumber;
+
+        calculationString += value;
+        calculationDisplay.textContent = calculationString;
     }
 };
 
@@ -63,18 +71,28 @@ const handleOperatorClick = (event) => {
     operator = event.target.textContent;
     display.value = firstNumber + operator;
     decimalAdded = false;
+
+    calculationString += operator;
+    calculationDisplay.textContent = calculationString;
 };
 
 const handleDecimalClick = () => {
     if (!decimalAdded) {
         if (!operator) {
+            if (result) {
+                firstNumber = '';
+                result = '';
+            }
             firstNumber += '.';
             display.value = firstNumber;
         } else {
             secondNumber += '.';
-            display.value = secondNumber;
+            display.value = firstNumber + operator + secondNumber;
         }
         decimalAdded = true;
+
+        calculationString += '.';
+        calculationDisplay.textContent = calculationString;
     }
 };
 
@@ -85,57 +103,63 @@ const handleClearClick = () => {
     result = '';
     display.value = '';
     decimalAdded = false;
+
+    calculationString = '';
+    calculationDisplay.textContent = calculationString;
 };
 
 const handleBackspaceClick = () => {
     let displayValue = display.value;
-    displayValue = displayValue.slice(0, -1);
-    if (!operator) {
-        firstNumber = displayValue;
-        display.value = firstNumber;
-    } else {
-        secondNumber = displayValue;
-        display.value = secondNumber;
+    if (displayValue) {
+        if (displayValue.length === 1) {
+            firstNumber = '';
+            operator = '';
+            secondNumber = '';
+            result = '';
+            display.value = '';
+            decimalAdded = false;
+        } else if (operator && !secondNumber) {
+            operator = '';
+            display.value = firstNumber;
+        } else if (!operator && !result) {
+            firstNumber = firstNumber.slice(0, firstNumber.length - 1);
+            display.value = firstNumber;
+        } else if (operator && secondNumber) {
+            secondNumber = secondNumber.slice(0, secondNumber.length - 1);
+            display.value = firstNumber + operator + secondNumber;
+        } else {
+            result = '';
+            firstNumber = firstNumber.slice(0, firstNumber.length - 1);
+            display.value = firstNumber;
+        }
     }
 };
 
 const handleEqualsClick = () => {
     if (firstNumber && operator && secondNumber) {
-        let calculation = firstNumber + operator + secondNumber;
-        while (calculation.includes("+") || calculation.includes("-") || calculation.includes("*") || calculation.includes("/")) {
-            let operatorIndex = -1;
-            if (calculation.includes("*") || calculation.includes("/")) {
-                if (calculation.indexOf("*") !== -1) {
-                    operatorIndex = calculation.indexOf("*");
-                } else {
-                    operatorIndex = calculation.indexOf("/");
-                }
-            } else if (calculation.includes("+") || calculation.includes("-")) {
-                if (calculation.indexOf("+") !== -1) {
-                    operatorIndex = calculation.indexOf("+");
-                } else {
-                    operatorIndex = calculation.indexOf("-");
-                }
-            }
-            let operator = calculation[operatorIndex];
-            let firstNumberIndex = calculation.lastIndexOf(" ", operatorIndex) + 1;
-            let secondNumberIndex = operatorIndex + 1;
-            let num1 = parseFloat(calculation.slice(firstNumberIndex, operatorIndex));
-            let num2 = parseFloat(calculation.slice(secondNumberIndex, calculation.indexOf(" ", secondNumberIndex)));
-            let result = operate(operator, num1, num2);
-            calculation = calculation.slice(0, firstNumberIndex) + result + calculation.slice(calculation.indexOf(" ", secondNumberIndex));
-        }
-        result = parseFloat(calculation);
+        result = operate(operator, parseFloat(firstNumber), parseFloat(secondNumber));
         display.value = result;
+        firstNumber = result;
+        operator = '';
+        secondNumber = '';
+        decimalAdded = false;
+
+        calculationString = '';
+        calculationDisplay.textContent = calculationString;
     }
 };
 
+document.addEventListener("click", function(event) {
+    if (event.target.matches("button")) {
+        calculationDisplay .textContent += event.target.textContent;
+    }
+  });
 
-numberButtons.forEach(button => {
+numberButtons.forEach((button) => {
     button.addEventListener('click', handleNumberClick);
 });
 
-operatorButtons.forEach(button => {
+operatorButtons.forEach((button) => {
     button.addEventListener('click', handleOperatorClick);
 });
 
@@ -143,7 +167,6 @@ decimalButton.addEventListener('click', handleDecimalClick);
 clearButton.addEventListener('click', handleClearClick);
 backspaceButton.addEventListener('click', handleBackspaceClick);
 equalsButton.addEventListener('click', handleEqualsClick);
-
 
 
 /////////
