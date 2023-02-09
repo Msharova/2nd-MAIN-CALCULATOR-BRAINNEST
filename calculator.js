@@ -168,7 +168,9 @@ clearButton.addEventListener('click', handleClearClick);
 backspaceButton.addEventListener('click', handleBackspaceClick);
 equalsButton.addEventListener('click', handleEqualsClick);
 
-//just a simple test from Maria's side :D yes, yes, once again :))
+
+//test test test
+
 
 /////////
 
