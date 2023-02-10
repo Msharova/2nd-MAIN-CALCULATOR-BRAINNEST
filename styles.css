@@ -4,17 +4,14 @@
     font-family: "Gotham Rounded", sans-serif;
     font-weight: normal;
 }
-
 body {
     margin: 0;
     padding: 0;
     background: linear-gradient(to right, #a6ffcb, #fcffa6);
 }
-
 h1 {
     text-align: center;
 }
-
 .calculator {
     background-color: white;
     border-radius: 20px;
@@ -24,8 +21,7 @@ h1 {
     width: 400px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
 }
-
-#display {
+#display, .previous-value {
     font-family: "Gotham Rounded", sans-serif;
     font-weight: normal;
     background-color: #f2f2f2;
@@ -37,14 +33,12 @@ h1 {
     width: 100%;
     border: none;
 }
-
 .buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 10px;
     margin: 20px 0;
 }
-
 .number,
 .operator {
     background-color: #808080;
@@ -60,7 +54,6 @@ h1 {
     cursor: pointer;
     transition: all 0.3s ease-in-out;
 }
-
 .number:hover,
 .operator:hover {
     background-color: #d9d9d9;
@@ -68,12 +61,10 @@ h1 {
     transform: translateY(-5px);
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
 }
-
 .operator {
     background-color: #696969;
     background-image: linear-gradient(to bottom, #696969, #b3b3b3);
 }
-
 #clear,
 #backspace {
     background-color: #ff6666;
@@ -88,35 +79,30 @@ h1 {
     cursor: pointer;
     transition: all 0.3s ease-in-out;
 }
-
 #clear:hover,
 #backspace:hover {
     background-color: #b30000;
     transform: translateY(-5px);
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
 }
-
 #equals{
     background-color: green;
     color: white;
     border-radius: 50%;
     height: 70px;
     width: 70px;
-font-size: 24px;
-display: flex;
-justify-content: center;
-align-items: center;
-cursor: pointer;
-transition: all 0.3s ease-in-out;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
 }
-
 #equals:hover {
-background-color: #006400;
-transform: translateY(-5px);
-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+    background-color: #006400;
+    transform: translateY(-5px);
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
 }
-
-
 #decimal {
     background-color: #808080;
     background-image: linear-gradient(to bottom, #808080, #d9d9d9);
@@ -130,12 +116,11 @@ box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
     align-items: center;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
-    }
-    
+}    
     #decimal:hover {
     background-color: #d9d9d9;
     background-image: linear-gradient(to bottom, #d9d9d9, #808080);
     transform: translateY(-5px);
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
-    }
+}
     
