@@ -13,8 +13,7 @@
         <h1>Calculator</h1>    
         <section class="calculator">
             <article>
-                <div id="calculation-display"></div>
-                <div class="previous-value"></div>
+                <input class="previous-operand" />
                 <input type="text" id="display" disabled />
             </article>            
             <div class="buttons">
@@ -30,13 +29,12 @@
                 <button class="number">8</button>
                 <button class="number">9</button>
                 <button class="operator">*</button>
-                <button class="number">.</button>
+                <button id="decimal">.</button>
                 <button class="number">0</button>
-                <button id="clear">C</button>
+                <button id="clear">AC</button>
                 <button class="operator">/</button>
                 <button id="backspace">&larr;</button>
                 <button id="equals">=</button>
-                <button  id="decimal">.</button>
             </div>
         </section>
     </main>
