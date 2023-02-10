@@ -149,11 +149,11 @@ const handleEqualsClick = () => {
     }
 };
 
-document.addEventListener("click", function(event) {
+document.addEventListener("click", function (event) {
     if (event.target.matches("button")) {
-        calculationDisplay .textContent += event.target.textContent;
+        calculationDisplay.textContent += event.target.textContent;
     }
-  });
+});
 
 numberButtons.forEach((button) => {
     button.addEventListener('click', handleNumberClick);
@@ -162,6 +162,22 @@ numberButtons.forEach((button) => {
 operatorButtons.forEach((button) => {
     button.addEventListener('click', handleOperatorClick);
 });
+
+
+document.addEventListener('keydown', function(event) {
+    if (event.key === '1' || event.key === '2' || event.key === '3' || event.key === '4' || event.key === '5' || event.key === '6' || event.key === '7' || event.key === '8' || event.key === '9' || event.key === '0') {
+        handleNumberClick({target: {textContent: event.key}});
+    } else if (event.key === '+' || event.key === '-' || event.key === '*' || event.key === '/') {
+        handleOperatorClick({target: {textContent: event.key}});
+    } else if (event.key === '.' || event.key === 'Decimal') {
+        handleDecimalClick();
+    } else if (event.key === 'Backspace') {
+        handleBackspaceClick();
+    } else if (event.key === '=' || event.key === 'Enter') {
+        handleEqualsClick();
+    }
+});
+
 
 decimalButton.addEventListener('click', handleDecimalClick);
 clearButton.addEventListener('click', handleClearClick);
