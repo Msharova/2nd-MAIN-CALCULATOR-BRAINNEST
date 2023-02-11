@@ -34,7 +34,6 @@ const divide = (num1, num2) => {
 };
 
 const operate = (operator, num1, num2) => {
-
     num1 = Number(num1);
     num2 = Number(num2);
 
@@ -68,7 +67,6 @@ const handleNumberClick = (event) => {
     } else {
         secondNumber += value;
         display.value += value;
-
         calculationString += value;
     }
 };
@@ -91,20 +89,20 @@ const handleOperatorClick = (event) => {
     if (operator !== '')
     {
         firstNumber = operate(operator,firstNumber,secondNumber);
+        if (firstNumber === "Can't divide by 0") {
+            display.value = "Can't divide by 0";
+            previousOperand.value = '';
+            return;
+        }
         secondNumber = '';
         calculationString = '';
     }
 
     operator = event.target.textContent;
-    
-
     previousOperand.value = firstNumber + operator;
-
     display.value = '';
     decimalAdded = false;
-
     calculationString += operator;
-
 };
 
 const handleDecimalClick = () => {
@@ -125,7 +123,6 @@ const handleDecimalClick = () => {
             display.value = secondNumber; 
         }
         decimalAdded = true;
-
         calculationString += '.';
     }
 };
@@ -138,7 +135,6 @@ const handleClearClick = () => {
     display.value = '';
     previousOperand.value = '';
     decimalAdded = false;
-
     calculationString = '';
 };
 
@@ -149,39 +145,33 @@ const handleBackspaceClick = () => {
     
     if (displayValue.length === 0 && !operator) return;
 
-    if (secondNumber)
-    {
+    if (secondNumber) {
         secondNumber = secondNumber.slice(0, secondNumber.length - 1);
         display.value = secondNumber;
     }
-    else if (operator)
-    {
+    else if (operator) {
         secondNumber = '';
         operator = '';
         previousOperand.value = '';
-
         display.value = firstNumber;
     }
-    else
-    {
+    else {
         secondNumber = '';
         operator = '';
         result = '';
         previousOperand.value = ''
-
         firstNumber = firstNumber.toString();
         firstNumber = firstNumber.slice(0, firstNumber.length - 1);
         if (firstNumber === '-') firstNumber = '';
-
         display.value = firstNumber;
     }
+
     if (displayValue[displayValue.length-1] === '.') decimalAdded = false;
-
-
 };
 
 const handleEqualsClick = () => {
     if (display.value === "Can't divide by 0") handleClearClick();
+    
     if (firstNumber && operator && secondNumber) {
         result = operate(operator, parseFloat(firstNumber), parseFloat(secondNumber));
         display.value = result;
