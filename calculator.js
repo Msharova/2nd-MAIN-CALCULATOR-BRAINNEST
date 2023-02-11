@@ -6,7 +6,6 @@ const decimalButton = document.querySelector('#decimal');
 const equalsButton = document.querySelector('#equals');
 const numberButtons = document.querySelectorAll('.number');
 const operatorButtons = document.querySelectorAll('.operator');
-
 let firstNumber = '';
 let operator = '';
 let secondNumber = '';
@@ -17,15 +16,12 @@ let calculationString = '';
 const add = (num1, num2) => {
     return num1 + num2;
 };
-
 const subtract = (num1, num2) => {
     return num1 - num2;
 };
-
 const multiply = (num1, num2) => {
     return num1 * num2;
 };
-
 const divide = (num1, num2) => {
     if (num2 === 0) {
         return "Can't divide by 0";
@@ -36,7 +32,6 @@ const divide = (num1, num2) => {
 const operate = (operator, num1, num2) => {
     num1 = Number(num1);
     num2 = Number(num2);
-
     switch (operator) {
         case '+':
             return add(num1, num2);
@@ -52,11 +47,8 @@ const operate = (operator, num1, num2) => {
 };
 
 const handleNumberClick = (event) => {
-
     if (display.value === "Can't divide by 0") handleClearClick();
-
     const value = event.target.textContent;
-
     if (!operator) {
         if (result) {
             firstNumber = '';
@@ -73,9 +65,7 @@ const handleNumberClick = (event) => {
 
 const handleOperatorClick = (event) => {
     if (display.value === "Can't divide by 0") handleClearClick();
-
     if (display.value === ''  && previousOperand.value === '' && event.target.textContent!=='-') return;
-
     if (display.value === ''  && previousOperand.value === '' && event.target.textContent==='-')
     {
         firstNumber = '0';
@@ -85,7 +75,6 @@ const handleOperatorClick = (event) => {
         display.value = '';
         return;
     }   
-
     if (operator !== '')
     {
         firstNumber = operate(operator,firstNumber,secondNumber);
@@ -97,7 +86,6 @@ const handleOperatorClick = (event) => {
         secondNumber = '';
         calculationString = '';
     }
-
     operator = event.target.textContent;
     previousOperand.value = firstNumber + operator;
     display.value = '';
@@ -107,7 +95,6 @@ const handleOperatorClick = (event) => {
 
 const handleDecimalClick = () => {
     if (display.value === "Can't divide by 0") handleClearClick();
-
     if (!decimalAdded) {
         if (!operator) {
             if (result) {
@@ -140,11 +127,8 @@ const handleClearClick = () => {
 
 const handleBackspaceClick = () => {
     if (display.value === "Can't divide by 0") handleClearClick();
-
     let displayValue = display.value;
-    
     if (displayValue.length === 0 && !operator) return;
-
     if (secondNumber) {
         secondNumber = secondNumber.slice(0, secondNumber.length - 1);
         display.value = secondNumber;
@@ -165,13 +149,11 @@ const handleBackspaceClick = () => {
         if (firstNumber === '-') firstNumber = '';
         display.value = firstNumber;
     }
-
     if (displayValue[displayValue.length-1] === '.') decimalAdded = false;
 };
 
 const handleEqualsClick = () => {
     if (display.value === "Can't divide by 0") handleClearClick();
-    
     if (firstNumber && operator && secondNumber) {
         result = operate(operator, parseFloat(firstNumber), parseFloat(secondNumber));
         display.value = result;
